@@ -43,6 +43,8 @@ void  test_paper_book(void)
 
   assert(b1 < b2);
   assert(b1 == b1);
+
+  b2.print(cout);
 }
 
 int   main(void)
