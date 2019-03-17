@@ -11,7 +11,7 @@ using std::string;
 using std::vector;
 using std::cout;
 
-void  test_paper_book(void)
+void test_paper_book(void)
 {
   vector<time_t> times(1, time(0));
 
@@ -23,7 +23,7 @@ void  test_paper_book(void)
                 6);
   assert(b1.get_name() == "Граф Монте-Кристо");
   assert(b1.get_authors() == "А. Дюма");
-  assert(b1.get_pages_count() == 314);
+  assert(b1.get_size().pages_count == 314);
   assert(b1.get_read_dates() == times);
   assert(b1.get_rating() == 88);
   assert(b1.get_condition() == 6);
@@ -44,11 +44,19 @@ void  test_paper_book(void)
   assert(b1 < b2);
   assert(b1 == b1);
 
+  paper_book b3("Мартин Иден",
+                "Д. Лондон",
+                277);
+
+  assert(b3.get_read_dates().size() == 0);
+  assert(b3.get_rating() == 0);
+  assert(b3.get_condition() == 10);
+
   b2.print(cout);
 }
 
-int   main(void)
+int main(void)
 {
   test_paper_book();
-  return (0);
+  return 0;
 }

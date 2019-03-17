@@ -4,20 +4,19 @@
 #include <cmath>
 #include <ctime>
 
-#include "paper_book.h"
+#include "digital_book.h"
 
-book::book_size paper_book::get_size(void) const {
-  book::book_size pb_size;
-  pb_size.pages_count = pages_count;
+book::book_size digital_book::get_size(void) const {
+  book::book_size db_size;
+  db_size.bytes_count = bytes_count;
 
-  return pb_size;
+  return db_size;
 }
 
-void paper_book::print(std::ostream& stream) const {
+void digital_book::print(std::ostream& stream) const {
   stream << "Book's name: " << get_name() << "\n";
   stream << "It's author(s): " << get_authors() << "\n";
-  stream << "Number of pages: " << pages_count << "\n";
+  stream << "Number of bytes: " << bytes_count << "\n";
   stream << "Number of times has been read: " << get_read_dates().size() << "\n";
   stream << "Rating: " << get_rating() << "\n";
-  stream << "Condition: " << condition << "\n";
 }
