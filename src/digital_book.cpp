@@ -8,7 +8,8 @@
 
 book::book_size digital_book::get_size(void) const {
   book::book_size db_size = book::book_size();
-  db_size.bytes_count = bytes_count;
+  db_size.size = bytes_count;
+  db_size.unit = book::measure::bytes;
 
   return db_size;
 }

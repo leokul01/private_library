@@ -13,12 +13,32 @@ class book
     int rating; //!< rating(0...100) of the book
 
   public:
+    //! Measurements for size of the book
+    typedef enum measure {
+      sheets,
+      bytes
+    } measure;
     //! Type for size of different kinds of books
     /*! Ex. digital[byttes] and paper[pages count] */
     typedef struct book_size
     {
-      float pages_count = NAN;
-      float bytes_count = NAN;
+      int size;
+      measure unit;
+
+      std::string get_readable_size(void) {
+        std::string size_str = std::to_string(size);
+        std::string unit_str;
+
+        if (unit == measure::sheets) {
+          unit_str = "sheets";
+        } else {
+          unit_str = "bytes";
+        }
+        
+        std::string readable_size = size_str + " " + unit_str;
+
+        return readable_size;
+      }
     } book_size;
     //! A constructor of book
     /*!

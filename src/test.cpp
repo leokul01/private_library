@@ -24,7 +24,8 @@ void test_paper_book(void)
                 6);
   assert(b1.get_name() == "Граф Монте-Кристо");
   assert(b1.get_authors() == "А. Дюма");
-  assert(b1.get_size().pages_count == 314);
+  assert(b1.get_size().size == 314);
+  assert(b1.get_size().unit == book::measure::sheets);
   assert(b1.get_read_dates() == times);
   assert(b1.get_rating() == 88);
   assert(b1.get_condition() == 6);
@@ -66,10 +67,9 @@ void test_digital_book()
                                      1534,
                                      times,
                                      95);
-  assert(std::isnan(db->get_size().bytes_count) == false);
-  assert(std::isnan(db->get_size().pages_count) == true);
-  assert(db->get_size().bytes_count == 1534);
+  assert(db->get_size().size == 1534);
   assert(db->get_read_dates().size() == 1);
+  assert(db->get_size().get_readable_size() == "1534 bytes");
 
   db->print(cout);
   delete db;
@@ -93,12 +93,11 @@ void test_hierarchy() {
   cout << "*** Test virtual functions ***" << endl;
   cout << "Where should be print and size of paper_book" << endl;
   container[0]->print(cout);
-  cout << endl;
-  container[0]->get_size();
   cout << endl << "Where should be print and size of digital book" << endl;
   container[1]->print(cout);
-  cout << endl;
-  container[1]->get_size();
+
+  delete container[0];
+  delete container[1];
 }
 
 int main(void)

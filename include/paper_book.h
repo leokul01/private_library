@@ -27,6 +27,7 @@ class paper_book: public book
                 int rating = 0,
                 int condition = 10):
                   book(name, authors, read_dates, rating),
+                  // There are possible mistakes
                   pages_count(pages_count),
                   condition(condition) {}
     virtual ~paper_book() {};

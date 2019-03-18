@@ -7,8 +7,9 @@
 #include "paper_book.h"
 
 book::book_size paper_book::get_size(void) const {
-  book::book_size pb_size;
-  pb_size.pages_count = pages_count;
+  book::book_size pb_size = book::book_size();
+  pb_size.size = pages_count;
+  pb_size.unit = book::measure::sheets;
 
   return pb_size;
 }
