@@ -7,7 +7,7 @@
 #include "digital_book.h"
 
 book::book_size digital_book::get_size(void) const {
-  book::book_size db_size;
+  book::book_size db_size = book::book_size();
   db_size.bytes_count = bytes_count;
 
   return db_size;

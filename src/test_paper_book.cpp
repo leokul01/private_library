@@ -2,14 +2,15 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
-
-#include <time.h>
+#include <ctime>
 
 #include "paper_book.h"
+#include "digital_book.h"
 
 using std::string;
 using std::vector;
 using std::cout;
+using std::endl;
 
 void test_paper_book(void)
 {
@@ -55,8 +56,55 @@ void test_paper_book(void)
   b2.print(cout);
 }
 
+void test_digital_book()
+{
+  vector<time_t> times;
+  times.push_back(time(0));
+
+  digital_book* db = new digital_book("Мы",
+                                     "Е. Замятин",
+                                     1534,
+                                     times,
+                                     95);
+  assert(std::isnan(db->get_size().bytes_count) == false);
+  assert(std::isnan(db->get_size().pages_count) == true);
+  assert(db->get_size().bytes_count == 1534);
+  assert(db->get_read_dates().size() == 1);
+
+  db->print(cout);
+  delete db;
+}
+
+void test_hierarchy() {
+  vector<time_t> times(1, time(0));
+  book* container[5];
+
+  container[0] = new paper_book("Граф Монте-Кристо",
+                                "А. Дюма",
+                                314,
+                                times,
+                                88,
+                                6);
+  container[1] = new digital_book("Мы",
+                                  "Е. Замятин",
+                                  1534,
+                                  times,
+                                  95);
+  cout << "*** Test virtual functions ***" << endl;
+  cout << "Where should be print and size of paper_book" << endl;
+  container[0]->print(cout);
+  cout << endl;
+  container[0]->get_size();
+  cout << endl << "Where should be print and size of digital book" << endl;
+  container[1]->print(cout);
+  cout << endl;
+  container[1]->get_size();
+}
+
 int main(void)
 {
   test_paper_book();
+  test_digital_book();
+  test_hierarchy();
   return 0;
 }

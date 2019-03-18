@@ -15,17 +15,11 @@ class book
   public:
     //! Type for size of different kinds of books
     /*! Ex. digital[byttes] and paper[pages count] */
-    struct book_size
+    typedef struct book_size
     {
-      int pages_count;
-      int bytes_count;
-
-      book_size()
-      {
-        pages_count = NAN;
-        bytes_count = NAN;
-      }
-    };
+      float pages_count = NAN;
+      float bytes_count = NAN;
+    } book_size;
     //! A constructor of book
     /*!
       \param name string with book's name
