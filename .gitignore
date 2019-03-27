@@ -33,3 +33,6 @@
 
 # MacOS additional files
 *.DS_Store
+
+# VS Code files
+*.vscode

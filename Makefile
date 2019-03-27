@@ -1,10 +1,10 @@
-EXECUTABLE				=								books_library
-CC								=								g++
-FLAGS							=								-Wall -Wextra -Werror -std=c++11 -I./include 
-SRC								=								src
-OBJ								=								obj
-SOURCE_FILES			=								$(wildcard ./$(SRC)/*.cpp)
-OBJECT_FILES			=								$(patsubst %.cpp, %.o, $(SOURCE_FILES))
+EXECUTABLE = books_library.out
+CC = g++
+FLAGS = -Wall -Wextra -Werror -std=c++11 -I./include 
+SRC	= src
+OBJ = obj
+SOURCE_FILES = $(wildcard ./$(SRC)/*.cpp)
+OBJECT_FILES = $(patsubst %.cpp, %.o, $(SOURCE_FILES))
 
 .PHONY: all clean fclean re
 
