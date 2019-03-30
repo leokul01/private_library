@@ -1,6 +1,6 @@
 EXECUTABLE = books_library.out
 CC = g++
-FLAGS = -Wall -Wextra -Werror -std=c++11 -I./include 
+FLAGS = -g -Wall -Wextra -Werror -std=c++11 -I./include 
 SRC	= src
 OBJ = obj
 SOURCE_FILES = $(wildcard ./$(SRC)/*.cpp)

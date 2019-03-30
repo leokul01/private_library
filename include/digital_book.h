@@ -5,9 +5,9 @@
 
 //! Digital book
 /*! A class desribing the digital book */
-class digital_book: public book
+class DigitalBook: public Book
 {
-    int bytes_count; //!< bytes in book
+    int bytesCount; //!< bytes in book
 
   public:
     //! A constructor of digital book
@@ -18,15 +18,15 @@ class digital_book: public book
       \param read_dates array of dates(double) when book has been read
       \param rating mark with range = 0...100
     */
-    digital_book(const std::string& name,
+    DigitalBook(const std::string& name,
                  const std::string& authors,
-                 int bytes_count,
-                 const std::vector<time_t>& read_dates = std::vector<time_t>(),
+                 int bytesCount,
+                 const std::vector<time_t>& readDates = std::vector<time_t>(),
                  int rating = 0):
-                   book(name, authors, read_dates, rating),
-                   bytes_count(bytes_count) {}
-    virtual ~digital_book() {};
-    book::book_size get_size(void) const;
+                   Book(name, authors, readDates, rating),
+                   bytesCount(bytesCount) {}
+    virtual ~DigitalBook() {};
+    Book::Size getSize(void) const;
     void print(std::ostream&) const;
 };
 

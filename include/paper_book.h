@@ -5,9 +5,9 @@
 
 //! Paper book
 /*! A class desribing the paper book */
-class paper_book: public book
+class PaperBook: public Book
 {
-    int pages_count; //!< number of pages in book
+    int pagesCount; //!< number of pages in book
     int condition; //!< condition(0...10) of the book
 
   public:
@@ -20,22 +20,22 @@ class paper_book: public book
       \param rating mark with range = 0...100
       \param condition integer describing condition of the book with range = 0...10
     */
-    paper_book (const std::string& name,
+    PaperBook (const std::string& name,
                 const std::string& authors,
-                int pages_count,
-                const std::vector<time_t>& read_dates = std::vector<time_t>(),
+                int pagesCount,
+                const std::vector<time_t>& readDates = std::vector<time_t>(),
                 int rating = 0,
                 int condition = 10):
-                  book(name, authors, read_dates, rating),
+                  Book(name, authors, readDates, rating),
                   // There are possible mistakes
-                  pages_count(pages_count),
+                  pagesCount(pagesCount),
                   condition(condition) {}
-    virtual ~paper_book() {};
-    book::book_size get_size(void) const;
+    virtual ~PaperBook() {};
+    Book::Size getSize(void) const;
     void print(std::ostream&) const;
     //! Get condition of the book with 0...10 scale
     /*! \return value of condition */
-    int get_condition(void) const
+    int getCondition(void) const
     {
       return condition;
     }

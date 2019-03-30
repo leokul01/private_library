@@ -6,19 +6,19 @@
 
 #include "paper_book.h"
 
-book::book_size paper_book::get_size(void) const {
-  book::book_size pb_size = book::book_size();
-  pb_size.size = pages_count;
-  pb_size.unit = book::measure::sheets;
+Book::Size PaperBook::getSize(void) const {
+  Book::Size pbSize = Book::Size();
+  pbSize.size = pagesCount;
+  pbSize.unit = Book::Measure::sheets;
 
-  return pb_size;
+  return pbSize;
 }
 
-void paper_book::print(std::ostream& stream) const {
-  stream << "Book's name: " << get_name() << "\n";
-  stream << "It's author(s): " << get_authors() << "\n";
-  stream << "Number of pages: " << pages_count << "\n";
-  stream << "Number of times has been read: " << get_read_dates().size() << "\n";
-  stream << "Rating: " << get_rating() << "\n";
+void PaperBook::print(std::ostream& stream) const {
+  stream << "Book's name: " << getName() << "\n";
+  stream << "It's author(s): " << getAuthors() << "\n";
+  stream << "Number of pages: " << pagesCount << "\n";
+  stream << "Number of times has been read: " << getReadDates().size() << "\n";
+  stream << "Rating: " << getRating() << "\n";
   stream << "Condition: " << condition << "\n";
 }

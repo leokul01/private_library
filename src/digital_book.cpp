@@ -6,18 +6,18 @@
 
 #include "digital_book.h"
 
-book::book_size digital_book::get_size(void) const {
-  book::book_size db_size = book::book_size();
-  db_size.size = bytes_count;
-  db_size.unit = book::measure::bytes;
+Book::Size DigitalBook::getSize(void) const {
+  Book::Size dbSize = Book::Size();
+  dbSize.size = bytesCount;
+  dbSize.unit = Book::Measure::bytes;
 
-  return db_size;
+  return dbSize;
 }
 
-void digital_book::print(std::ostream& stream) const {
-  stream << "Book's name: " << get_name() << "\n";
-  stream << "It's author(s): " << get_authors() << "\n";
-  stream << "Number of bytes: " << bytes_count << "\n";
-  stream << "Number of times has been read: " << get_read_dates().size() << "\n";
-  stream << "Rating: " << get_rating() << "\n";
+void DigitalBook::print(std::ostream& stream) const {
+  stream << "Book's name: " << getName() << "\n";
+  stream << "It's author(s): " << getAuthors() << "\n";
+  stream << "Number of bytes: " << bytesCount << "\n";
+  stream << "Number of times has been read: " << getReadDates().size() << "\n";
+  stream << "Rating: " << getRating() << "\n";
 }
