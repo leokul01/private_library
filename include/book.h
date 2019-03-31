@@ -2,6 +2,8 @@
 #define BOOK_H_
 
 #include <cmath>
+#include <string>
+#include <vector>
 
 //! Paper book
 /*! A class desribing general features of any book */
@@ -50,6 +52,7 @@ class Book
             rating(rating) {}
     //! Virtual destructor of the book
     virtual ~Book() {};
+    virtual Book* clone() const = 0;
     //! Get name of the book
     /*! \return value of name */
     const std::string& getName(void) const
@@ -80,11 +83,14 @@ class Book
     //! Estimate the book
     /*! \param mark the mark of the book with range 0...100 */
     void estimate(int mark);
+    virtual void oldify(int) {}
+    virtual int getCondition(void) const { return 10; }
     //! Call when the book read once more
     void read(void);
     //! Print information about the book
     virtual void print(std::ostream&) const = 0;
     bool operator <(const Book &b) const;
+    bool operator >(const Book &b) const;
     bool operator ==(const Book &b) const;
 };
 

@@ -3,9 +3,11 @@
 #include <vector>
 #include <cassert>
 #include <ctime>
+#include <cstdlib>
 
 #include "paper_book.h"
 #include "digital_book.h"
+#include "library.h"
 #include "test.h"
 
 using std::string;
@@ -58,7 +60,7 @@ void Test::paperBook(void)
   b2.print(cout);
 }
 
-void Test::digitalBook() {
+void Test::digitalBook(void) {
   vector<time_t> times;
   times.push_back(time(0));
 
@@ -75,7 +77,7 @@ void Test::digitalBook() {
   delete db;
 }
 
-void Test::hierarchy() {
+void Test::hierarchy(void) {
   vector<time_t> times(1, time(0));
   Book* container[5];
 
@@ -98,4 +100,62 @@ void Test::hierarchy() {
 
   delete container[0];
   delete container[1];
+}
+
+void Test::container(void) {
+  vector<time_t> times(1, time(0));
+  Library lib = Library();
+
+  PaperBook* book1 = new PaperBook("e",
+                        "Д. Лондон",
+                        277);
+  DigitalBook* book2 = new DigitalBook("c",
+                          "Е. Замятин",
+                          1534,
+                          times,
+                          100);
+  PaperBook* book3 = new PaperBook("k",
+                        "А. Дюма",
+                        314,
+                        times,
+                        100,
+                        6);
+  PaperBook* book4 = new PaperBook("h",
+                        "Д. Лондон",
+                        277);
+  PaperBook* book5 = new PaperBook("a",
+                        "Д. Лондон",
+                        277);
+  PaperBook* book6 = new PaperBook("d",
+                        "Д. Лондон",
+                        277);
+  PaperBook* book7 = new PaperBook("g",
+                        "Д. Лондон",
+                        277);
+  PaperBook* book8 = new PaperBook("m",
+                        "Д. Лондон",
+                        277);
+  PaperBook* book9 = new PaperBook("z",
+                        "Д. Лондон",
+                        277);
+
+  Book* books[9] = {book1, book2, book3, book4, book5, book6, book7, book8, book9};
+
+  for(int i = 0; i < 9; i++) lib.insert(books[i]);
+  lib.show();
+  cout << endl;
+  lib.show(true);
+  cout << endl;
+  lib.remove("e");
+  lib.remove("a");
+  lib.remove("m");
+  lib.remove("d");
+  lib.remove("g");
+  lib.show();
+  cout << endl;
+  lib.oldify("k", 7);
+  // cout << lib.get("k")->getCondition() << endl;
+  lib.show();
+  cout << endl;
+  lib.clean();
 }

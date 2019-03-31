@@ -7,7 +7,7 @@
 /*! A class desribing the digital book */
 class DigitalBook: public Book
 {
-    int bytesCount; //!< bytes in book
+  int bytesCount; //!< bytes in book
 
   public:
     //! A constructor of digital book
@@ -25,6 +25,10 @@ class DigitalBook: public Book
                  int rating = 0):
                    Book(name, authors, readDates, rating),
                    bytesCount(bytesCount) {}
+    DigitalBook(const DigitalBook& rhs): 
+      Book(rhs.getName(), rhs.getAuthors(), rhs.getReadDates(), rhs.getRating()), 
+      bytesCount(rhs.bytesCount) {}
+    DigitalBook* clone() const { return new DigitalBook(*this); }
     virtual ~DigitalBook() {};
     Book::Size getSize(void) const;
     void print(std::ostream&) const;

@@ -14,6 +14,10 @@ bool Book::operator <(const Book &b) const {
   return name < b.name;
 }
 
+bool Book::operator >(const Book &b) const {
+  return name > b.name;
+}
+
 bool Book::operator ==(const Book &b) const {
   return name == b.name;
 }

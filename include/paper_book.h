@@ -30,8 +30,15 @@ class PaperBook: public Book
                   // There are possible mistakes
                   pagesCount(pagesCount),
                   condition(condition) {}
+    PaperBook(const PaperBook& rhs): 
+      Book(rhs.getName(), rhs.getAuthors(), rhs.getReadDates(), rhs.getRating()),
+      pagesCount(rhs.pagesCount) {}
+    PaperBook* clone() const { return new PaperBook(*this); }
     virtual ~PaperBook() {};
     Book::Size getSize(void) const;
+    void oldify(int on) {
+      condition -= on;
+    }
     void print(std::ostream&) const;
     //! Get condition of the book with 0...10 scale
     /*! \return value of condition */
