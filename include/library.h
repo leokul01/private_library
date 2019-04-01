@@ -30,6 +30,8 @@ class Library {
     
         Node* booksTree = nullptr; /**< Container itself */
 
+        void showPretty(Node* booksTree, int curDepth) const;
+        int getMaxDepth(Node* booksTree) const;
         /**
          * @brief Insert
          * Add element which is dynamically allocated to container
@@ -58,10 +60,19 @@ class Library {
         /**
          * @brief Show
          * Print the tree inorder
-         * @param highestRating If true shows only books with highest rating parameter, 
+         * @param onlyHighestRating If true shows only books with highest rating parameter, 
          *        else all
+         * @param thresholdRating Used when <onlyHighestRating> is false and determs the
+         *        minimun rating for book to be printed
          */
-        void show(bool highestRating = false) const;
+        void show(bool onlyHighestRating = false, int thresholdRating = 101) const;
+        void showPretty(void) const;
+        /**
+         * @brief Get the Max Rating
+         * Parse all books in the library and search maximum value for rating field of book
+         * @return max rating met in the library
+         */
+        int getMaxRating(void) const;
         /**
          * @brief Wrapper for private Insert method
          * This method hides the claim to specify tree in parameters 
@@ -101,6 +112,10 @@ class Library {
          *         otherwise nullptr
          */
         const Book* get(const std::string& bookName) const;
+
+        ~Library() {
+            clean();
+        }
 };
 
 #endif

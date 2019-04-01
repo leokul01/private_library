@@ -142,20 +142,23 @@ void Test::container(void) {
   Book* books[9] = {book1, book2, book3, book4, book5, book6, book7, book8, book9};
 
   for(int i = 0; i < 9; i++) lib.insert(books[i]);
-  lib.show();
+  // lib.show();
+  // cout << endl;
+  // lib.show(true);
+  // cout << endl;
+  // lib.remove("e");
+  // lib.remove("a");
+  // lib.remove("m");
+  // lib.remove("d");
+  // lib.remove("g");
+  // lib.show();
+  // cout << endl;
+  // lib.oldify("k", 7);
+  // // cout << lib.get("k")->getCondition() << endl;
+  // lib.show();
+  // cout << endl;
+  // cout << endl;
+  lib.showPretty();
   cout << endl;
-  lib.show(true);
-  cout << endl;
-  lib.remove("e");
-  lib.remove("a");
-  lib.remove("m");
-  lib.remove("d");
-  lib.remove("g");
-  lib.show();
-  cout << endl;
-  lib.oldify("k", 7);
-  // cout << lib.get("k")->getCondition() << endl;
-  lib.show();
-  cout << endl;
-  lib.clean();
+
 }

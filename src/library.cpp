@@ -2,6 +2,11 @@
 #include "library.h"
 #include "book.h"
 
+using std::string;
+using std::vector;
+using std::endl;
+using std::cout;
+
 void Library::oldify(const std::string& bookName, int on) {
     Node* booksTree = this->booksTree;
 
@@ -61,31 +66,93 @@ const Book* Library::get(const std::string& bookName) const {
     return nullptr;
 }
 
-void Library::show(bool highestRating) const {
+void Library::showPretty(Node* booksTree, int curDepth) const {
+    if (booksTree == nullptr)
+        return;
+    if (!booksTree->isRightSewed)
+        showPretty(booksTree->right, curDepth+1);
+    for(int i=0;i<curDepth;++i)
+        printf(" ");
+        printf("%s\n", booksTree->book->getName().c_str());
+    if (!booksTree->isLeftSewed)
+        showPretty(booksTree->left, curDepth+1);
+}
+
+void Library::showPretty(void) const {
+    showPretty(booksTree, 0);
+}
+
+int Library::getMaxDepth(Node* booksTree) const {
+    if (booksTree == nullptr)  
+        return 0;  
+    else {  
+        int leftDepth = (booksTree->isLeftSewed) ? 0 : getMaxDepth(booksTree->left);  
+        int rightDepth = (booksTree->isRightSewed) ? 0 : getMaxDepth(booksTree->right);  
+      
+        if (leftDepth > rightDepth)  
+            return(leftDepth + 1);  
+        else return(rightDepth + 1);  
+    }  
+}
+
+void Library::show(bool onlyHighestRating, int thresholdRating) const {
     Node* booksTree = this->booksTree;
 
     // Go through the tree
     while (booksTree != nullptr) {
         // Get down to the most left and low from current <booksTree>
-        while (booksTree->left != nullptr && !(booksTree->isLeftSewed)) 
+        while (booksTree->left != nullptr && !(booksTree->isLeftSewed))
             booksTree = booksTree->left;
         // Go up along the sewing
         while (booksTree->isRightSewed) {
             // If <highestRating> parameter is true, when check
             // that the book has highest rating. If it is so, print book's name out
             // If <highestRating> parameter is false, print without any checks
-            if ((highestRating == true && booksTree->book->getRating() == 100) || highestRating == false) {
+            if ((onlyHighestRating == true && booksTree->book->getRating() == 100) || 
+                (onlyHighestRating == false && booksTree->book->getRating() >= thresholdRating) ||
+                (onlyHighestRating == false && thresholdRating == 101)) 
+            {
                 std::cout << booksTree->book->getName() << " ";
             }
             booksTree = booksTree->right;
         }
         // Last element in previous cycle isn't checked, so I do it here
-        if ((highestRating == true && booksTree->book->getRating() == 100) || highestRating == false) {
+        if ((onlyHighestRating == true && booksTree->book->getRating() == 100) || 
+            onlyHighestRating == false) {
             std::cout << booksTree->book->getName() << " ";
         }
         booksTree = booksTree->right;
     }
 }
+
+int Library::getMaxRating(void) const {
+    Node* booksTree = this->booksTree;
+    int maxRating = 0;
+
+    // Go through the tree
+    while (booksTree != nullptr) {
+        // Get down to the most left and low from current <booksTree>
+        while (booksTree->left != nullptr && !(booksTree->isLeftSewed)) 
+            booksTree = booksTree->left;
+        // Go up along the sewing and seek the book with specified name <bookName>
+        while (booksTree->isRightSewed) {
+            // If rating of this book is higher than <maxRating>,
+            // put rating of this book to <maxRating>
+            int curBookRating = booksTree->book->getRating();
+            if (curBookRating > maxRating)
+                maxRating = curBookRating;
+            booksTree = booksTree->right;
+        }
+        // Last element in previous cycle isn't checked, so I do it here
+        int curBookRating = booksTree->book->getRating();
+        if (curBookRating > maxRating)
+            maxRating = curBookRating;
+        booksTree = booksTree->right;
+    }
+
+    return maxRating;
+}
+
 
 void Library::clean(void) {
     Node* booksTree = this->booksTree;
@@ -246,8 +313,9 @@ Library::Node* Library::destroy(Node* booksTree) {
 
         // Deallocate booksTree and return its left subtree on the same place
         // with repaired predecessors sewings
+        Node* tmp = booksTree->left;
         delete booksTree;
-        return booksTree->left;
+        return tmp;
     } 
     // (Case 5) Check the case then right connection is firm (not a sewing) and left is a sewing
     //                       *
@@ -270,8 +338,9 @@ Library::Node* Library::destroy(Node* booksTree) {
 
         // Deallocate booksTree and return its right subtree on the same place
         // with repaired predecessors sewings
+        Node* tmp = booksTree->right;
         delete booksTree;
-        return booksTree->right;
+        return tmp;
     } 
     // (Case 6) Check the case then both connections are firm (not sewings)
     //                       *
