@@ -2,40 +2,105 @@
 #define LIBRARY_H_
 
 #include "book.h"
-
+/**
+ * @brief Library
+ * Container (Threaded binary tree) for paper and digital books.
+ */
 class Library {
-    public:
+    private:
+    /**
+     * @brief Node
+     * Element of container
+     */
         class Node {
             public:
-                Book* book;
+                Book* book; /**< Book */
 
-                Node* left = nullptr;
-                bool isLeftSewed = false;
+                Node* left = nullptr; /**< Pointer to the left subtree */
+                bool isLeftSewed = false; /**< True if this node has left stitching */
 
-                Node* right = nullptr;
-                bool isRightSewed = false;
+                Node* right = nullptr;  /**< Pointer to the right subtree */
+                bool isRightSewed = false; /**< True if this node has right stitching */
 
                 Node(Book* book, Node* left = nullptr, Node* right = nullptr): book(book), left(left), right(right) {}
                 ~Node() {
                     delete book;
                 }
         };
+    
+        Node* booksTree = nullptr; /**< Container itself */
+
+        /**
+         * @brief Insert
+         * Add element which is dynamically allocated to container
+         * @param book The book to add
+         * @param booksTree The container of books
+         */
+        void insert(Book *book, Node*& booksTree);
+        /**
+         * @brief Remove
+         * Remove book with name <bookName> from container
+         * @param bookName The name of the book to remove
+         * @param booksTree The container
+         * @return Node* The pointer to node, that takes place after deletion
+         *               on the same position as removed node had
+         */
+        Node* remove(const std::string& bookName, Node* booksTree);
+        /**
+         * @brief Destroy
+         * Delete specified Node pointed by <booksTree>
+         * @param booksTree The pointer to Node to deallocate
+         * @return Node* The pointer to Node after repairing the tree from deletion
+         */
+        Node* destroy(Node* booksTree);
+
+    public:
+        /**
+         * @brief Show
+         * Print the tree inorder
+         * @param highestRating If true shows only books with highest rating parameter, 
+         *        else all
+         */
         void show(bool highestRating = false) const;
+        /**
+         * @brief Wrapper for private Insert method
+         * This method hides the claim to specify tree in parameters 
+         * and calls private Insert method
+         * @param book The book to insert
+         */
         void insert(Book* book) {
             insert(book, booksTree);
         }
-        Node* remove(const std::string& bookName) {
-            return remove(bookName, booksTree);
+        /**
+         * @brief Wrapper for private Remove method
+         * This method hides the claim to specify tree in parameters 
+         * and calls private Insert method
+         * @param bookName The name of the book to delete from container
+         */
+        void remove(const std::string& bookName) {
+            remove(bookName, booksTree);
         }
-        Node* destroy(Node* booksTree);
+        /**
+         * @brief Clean
+         * Deallocate all nodes, container contains
+         */
         void clean();
+        /**
+         * @brief Oldify
+         * Change the condition parameter of paper book with name <bookName> 
+         * on specified points <on>
+         * @param bookName The name of the book
+         * @param on Amount of points to pull off from book's condition
+         */
         void oldify(const std::string& bookName, int on);
-        Book* get(const std::string& bookName) const;
-    private:
-        Node* booksTree = nullptr;
-
-        void insert(Book *book, Node*& booksTree);
-        Node* remove(const std::string& bookName, Node* booksTree);
+        /**
+         * @brief Get
+         * The method to get book with specified name from container if it exists
+         * @param bookName The name of the book to seek in container
+         * @return const Book* The pointer to the desired book if it exists,
+         *         otherwise nullptr
+         */
+        const Book* get(const std::string& bookName) const;
 };
 
 #endif
