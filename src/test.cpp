@@ -10,7 +10,6 @@
 #include "library.h"
 #include "test.h"
 
-using std::string;
 using std::vector;
 using std::cout;
 using std::endl;
@@ -113,12 +112,12 @@ void Test::container(void) {
                           "Е. Замятин",
                           1534,
                           times,
-                          100);
+                          74);
   PaperBook* book3 = new PaperBook("k",
                         "А. Дюма",
                         314,
                         times,
-                        100,
+                        89,
                         6);
   PaperBook* book4 = new PaperBook("h",
                         "Д. Лондон",
@@ -142,23 +141,31 @@ void Test::container(void) {
   Book* books[9] = {book1, book2, book3, book4, book5, book6, book7, book8, book9};
 
   for(int i = 0; i < 9; i++) lib.insert(books[i]);
-  // lib.show();
-  // cout << endl;
-  // lib.show(true);
-  // cout << endl;
-  // lib.remove("e");
-  // lib.remove("a");
-  // lib.remove("m");
-  // lib.remove("d");
-  // lib.remove("g");
-  // lib.show();
-  // cout << endl;
-  // lib.oldify("k", 7);
-  // // cout << lib.get("k")->getCondition() << endl;
-  // lib.show();
-  // cout << endl;
-  // cout << endl;
-  lib.showPretty();
-  cout << endl;
 
+  std::string str1 = lib.show();
+  assert(str1 == "a c d e g h k m z ");
+
+  assert(lib.getMaxRating() == 89);
+
+  const Book* test_book = lib.get("c");
+  assert(test_book->getName() == "c");
+  assert(test_book->getAuthors() == "Е. Замятин");
+  assert(test_book->getReadDates() == times);
+  assert(test_book->getRating() == 74);
+
+
+  PaperBook* test_book2 = new PaperBook("l",
+                          "А. Морган",
+                          321);
+  lib.insert(test_book2);
+  std::string str2 = lib.show();
+  assert(str2 == "a c d e g h k l m z ");
+
+  lib.remove("l");
+  std::string str3 = lib.show();
+  assert(str3 == "a c d e g h k m z ");
+
+  lib.oldify("k", 4);
+  const Book* test_book3 = lib.get("k");
+  assert(test_book3->getCondition() == 2);
 }

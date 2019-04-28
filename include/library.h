@@ -2,71 +2,37 @@
 #define LIBRARY_H_
 
 #include "book.h"
+#include <map>
+#include <string>
+#include <memory>
+#include <utility>
+#include <iostream>
+
+using std::map;
+using std::string;
+using std::shared_ptr;
+using std::move;
+using std::pair;
 /**
  * @brief Library
  * Container (Threaded binary tree) for paper and digital books.
  */
 class Library {
-    private:
-    /**
-     * @brief Node
-     * Element of container
-     */
-        class Node {
-            public:
-                Book* book; /**< Book */
-
-                Node* left = nullptr; /**< Pointer to the left subtree */
-                bool isLeftSewed = false; /**< True if this node has left stitching */
-
-                Node* right = nullptr;  /**< Pointer to the right subtree */
-                bool isRightSewed = false; /**< True if this node has right stitching */
-
-                Node(Book* book, Node* left = nullptr, Node* right = nullptr): book(book), left(left), right(right) {}
-                ~Node() {
-                    delete book;
-                }
-        };
-    
-        Node* booksTree = nullptr; /**< Container itself */
-
-        void showPretty(Node* booksTree, int curDepth) const;
-        int getMaxDepth(Node* booksTree) const;
-        /**
-         * @brief Insert
-         * Add element which is dynamically allocated to container
-         * @param book The book to add
-         * @param booksTree The container of books
-         */
-        void insert(Book *book, Node*& booksTree);
-        /**
-         * @brief Remove
-         * Remove book with name <bookName> from container
-         * @param bookName The name of the book to remove
-         * @param booksTree The container
-         * @return Node* The pointer to node, that takes place after deletion
-         *               on the same position as removed node had
-         */
-        Node* remove(const std::string& bookName, Node* booksTree);
-        /**
-         * @brief Destroy
-         * Delete specified Node pointed by <booksTree>
-         * @param booksTree The pointer to Node to deallocate
-         * @return Node* The pointer to Node after repairing the tree from deletion
-         */
-        Node* destroy(Node* booksTree);
+    private:    
+        map <string, shared_ptr<Book>> booksMap;
 
     public:
         /**
          * @brief Show
          * Print the tree inorder
+         * @param buf The buffer to print in
          * @param onlyHighestRating If true shows only books with highest rating parameter, 
          *        else all
          * @param thresholdRating Used when <onlyHighestRating> is false and determs the
          *        minimun rating for book to be printed
+         * @return string which contains output to buf
          */
-        void show(bool onlyHighestRating = false, int thresholdRating = 101) const;
-        void showPretty(void) const;
+        std::string show(std::ostream& buf = std::cout, bool onlyHighestRating = false, int thresholdRating = 101) const;
         /**
          * @brief Get the Max Rating
          * Parse all books in the library and search maximum value for rating field of book
@@ -80,7 +46,7 @@ class Library {
          * @param book The book to insert
          */
         void insert(Book* book) {
-            insert(book, booksTree);
+            booksMap[book->getName()] = shared_ptr<Book>(book);
         }
         /**
          * @brief Wrapper for private Remove method
@@ -89,13 +55,15 @@ class Library {
          * @param bookName The name of the book to delete from container
          */
         void remove(const std::string& bookName) {
-            remove(bookName, booksTree);
+            booksMap.erase(bookName);
         }
         /**
          * @brief Clean
          * Deallocate all nodes, container contains
          */
-        void clean();
+        void clean() {
+            booksMap.clear();
+        }
         /**
          * @brief Oldify
          * Change the condition parameter of paper book with name <bookName> 
@@ -103,7 +71,11 @@ class Library {
          * @param bookName The name of the book
          * @param on Amount of points to pull off from book's condition
          */
-        void oldify(const std::string& bookName, int on);
+        void oldify(const std::string& bookName, int on) {
+            if (on > booksMap[bookName]->getCondition()) {
+                booksMap.erase(bookName);
+            } else booksMap[bookName]->oldify(on);
+        }
         /**
          * @brief Get
          * The method to get book with specified name from container if it exists
@@ -111,7 +83,12 @@ class Library {
          * @return const Book* The pointer to the desired book if it exists,
          *         otherwise nullptr
          */
-        const Book* get(const std::string& bookName) const;
+        const Book* get(const std::string& bookName) const {
+            auto it = booksMap.find(bookName);
+            if (it != booksMap.end())
+                return it->second.get();
+            return nullptr;
+        }
 
         ~Library() {
             clean();
