@@ -15,7 +15,7 @@ $(EXECUTABLE): $(OBJECT_FILES)
 	$(CC) -c -o $@ $< $(FLAGS)
 
 lib:
-	$(CC) -I./include/ -std=c++14 -shared -fPIC -Wl,-undefined,dynamic_lookup `python3 -m pybind11 --includes` example.cpp -o example`python3-config --extension-suffix`
+	$(CC) -I./include/ -std=c++14 -shared -fPIC -Wl,-undefined,dynamic_lookup `python3 -m pybind11 --includes` python_module.cpp -o private_library`python3-config --extension-suffix`
 
 clean:
 	/bin/rm -f $(OBJECT_FILES)
