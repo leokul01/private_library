@@ -31,7 +31,7 @@ class DigitalBook: public Book
     DigitalBook* clone() const { return new DigitalBook(*this); }
     virtual ~DigitalBook() {};
     Book::Size getSize(void) const;
-    void print(std::ostream&) const;
+    void print() const;
 };
 
 #endif

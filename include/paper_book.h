@@ -10,7 +10,7 @@ class PaperBook: public Book
     int pagesCount; //!< number of pages in book
     int condition; //!< condition(0...10) of the book
 
-  public:
+public:
     //! A constructor of paper book
     /*!
       \param name string with book's name
@@ -27,19 +27,22 @@ class PaperBook: public Book
                 int rating = 0,
                 int condition = 10):
                   Book(name, authors, readDates, rating),
-                  // There are possible mistakes
+                  // TODO: There are possible mistakes
                   pagesCount(pagesCount),
                   condition(condition) {}
-    PaperBook(const PaperBook& rhs): 
+
+    PaperBook (const PaperBook& rhs): 
       Book(rhs.getName(), rhs.getAuthors(), rhs.getReadDates(), rhs.getRating()),
-      pagesCount(rhs.pagesCount) {}
+      pagesCount(rhs.pagesCount),
+      condition(rhs.condition) {}
+    
     PaperBook* clone() const { return new PaperBook(*this); }
     virtual ~PaperBook() {};
     Book::Size getSize(void) const;
     void oldify(int on) {
-      condition -= on;
+      if (this->condition >= on) condition -= on;
     }
-    void print(std::ostream&) const;
+    void print() const;
     //! Get condition of the book with 0...10 scale
     /*! \return value of condition */
     int getCondition(void) const

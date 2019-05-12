@@ -7,16 +7,16 @@ using std::vector;
 using std::endl;
 using std::cout;
 
-string Library::show(std::ostream& buf, bool onlyHighestRating, int thresholdRating) const {
+string Library::show(bool onlyHighestRating, int thresholdRating) const {
     string result = "";
     for(auto it = booksMap.begin(); it != booksMap.end(); it++) {
-        if ((onlyHighestRating == true && it->second->getRating() == 100) || 
-        (onlyHighestRating == false && it->second->getRating() >= thresholdRating) ||
-        (onlyHighestRating == false && thresholdRating == 101)) {
+        if ((onlyHighestRating && it->second->getRating() == 100) || 
+        (!onlyHighestRating && it->second->getRating() >= thresholdRating) ||
+        (!onlyHighestRating && thresholdRating == 101)) {
             result = result + it->second->getName() + " ";
         }
     }
-    buf << result;
+    cout << result;
     return result;
 }
 

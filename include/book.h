@@ -88,7 +88,7 @@ class Book
     //! Call when the book read once more
     void read(void);
     //! Print information about the book
-    virtual void print(std::ostream&) const = 0;
+    virtual void print() const = 0;
     bool operator <(const Book &b) const;
     bool operator >(const Book &b) const;
     bool operator ==(const Book &b) const;

@@ -56,7 +56,7 @@ void Test::paperBook(void)
   assert(b3.getRating() == 0);
   assert(b3.getCondition() == 10);
 
-  b2.print(cout);
+  b2.print();
 }
 
 void Test::digitalBook(void) {
@@ -72,7 +72,7 @@ void Test::digitalBook(void) {
   assert(db->getReadDates().size() == 1);
   assert(db->getSize().getReadableSize() == "1534 bytes");
 
-  db->print(cout);
+  db->print();
   delete db;
 }
 
@@ -93,9 +93,9 @@ void Test::hierarchy(void) {
                                   95);
   cout << "*** Test virtual functions ***" << endl;
   cout << "Where should be print and size of paper_book" << endl;
-  container[0]->print(cout);
+  container[0]->print();
   cout << endl << "Where should be print and size of digital book" << endl;
-  container[1]->print(cout);
+  container[1]->print();
 
   delete container[0];
   delete container[1];

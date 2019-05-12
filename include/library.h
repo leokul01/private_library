@@ -11,20 +11,18 @@
 using std::map;
 using std::string;
 using std::shared_ptr;
-using std::move;
-using std::pair;
 /**
  * @brief Library
  * Container (Threaded binary tree) for paper and digital books.
  */
 class Library {
-    private:    
+private:    
         map <string, shared_ptr<Book>> booksMap;
 
-    public:
+public:
         /**
          * @brief Show
-         * Print the tree inorder
+         * Print the container
          * @param buf The buffer to print in
          * @param onlyHighestRating If true shows only books with highest rating parameter, 
          *        else all
@@ -32,28 +30,16 @@ class Library {
          *        minimun rating for book to be printed
          * @return string which contains output to buf
          */
-        std::string show(std::ostream& buf = std::cout, bool onlyHighestRating = false, int thresholdRating = 101) const;
+        std::string show(bool onlyHighestRating = false, int thresholdRating = 101) const;
         /**
          * @brief Get the Max Rating
          * Parse all books in the library and search maximum value for rating field of book
          * @return max rating met in the library
          */
         int getMaxRating(void) const;
-        /**
-         * @brief Wrapper for private Insert method
-         * This method hides the claim to specify tree in parameters 
-         * and calls private Insert method
-         * @param book The book to insert
-         */
         void insert(Book* book) {
             booksMap[book->getName()] = shared_ptr<Book>(book);
         }
-        /**
-         * @brief Wrapper for private Remove method
-         * This method hides the claim to specify tree in parameters 
-         * and calls private Insert method
-         * @param bookName The name of the book to delete from container
-         */
         void remove(const std::string& bookName) {
             booksMap.erase(bookName);
         }

@@ -14,10 +14,10 @@ Book::Size DigitalBook::getSize(void) const {
   return dbSize;
 }
 
-void DigitalBook::print(std::ostream& stream) const {
-  stream << "Book's name: " << getName() << "\n";
-  stream << "It's author(s): " << getAuthors() << "\n";
-  stream << "Number of bytes: " << bytesCount << "\n";
-  stream << "Number of times has been read: " << getReadDates().size() << "\n";
-  stream << "Rating: " << getRating() << "\n";
+void DigitalBook::print() const {
+  std::cout << "Book's name: " << getName() << "\n";
+  std::cout << "It's author(s): " << getAuthors() << "\n";
+  std::cout << "Number of bytes: " << bytesCount << "\n";
+  std::cout << "Number of times has been read: " << getReadDates().size() << "\n";
+  std::cout << "Rating: " << getRating() << "\n";
 }

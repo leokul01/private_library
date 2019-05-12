@@ -14,11 +14,11 @@ Book::Size PaperBook::getSize(void) const {
   return pbSize;
 }
 
-void PaperBook::print(std::ostream& stream) const {
-  stream << "Book's name: " << getName() << "\n";
-  stream << "It's author(s): " << getAuthors() << "\n";
-  stream << "Number of pages: " << pagesCount << "\n";
-  stream << "Number of times has been read: " << getReadDates().size() << "\n";
-  stream << "Rating: " << getRating() << "\n";
-  stream << "Condition: " << condition << "\n";
+void PaperBook::print() const {
+  std::cout << "Book's name: " << getName() << "\n";
+  std::cout << "It's author(s): " << getAuthors() << "\n";
+  std::cout << "Number of pages: " << pagesCount << "\n";
+  std::cout << "Number of times has been read: " << getReadDates().size() << "\n";
+  std::cout << "Rating: " << getRating() << "\n";
+  std::cout << "Condition: " << condition << "\n";
 }
